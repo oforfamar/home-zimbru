@@ -1,0 +1,21 @@
+{
+  "name": "file-mover",
+  "version": "1.0.0",
+  "description": "small project that will move files from one folder to another",
+  "main": "dist/src/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf dist/",
+    "dev": "NODE_ENV=development npm run build && node --trace-warnings dist/src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tudor Roman",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.1"
+  }
+}
