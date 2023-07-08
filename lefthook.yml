@@ -5,17 +5,30 @@
 
 pre-commit:
   commands:
-    # lint:
-    #   glob: "*.{js,jsx,ts,tsx}"
-    #   run: npm run lint:fix && git add {staged_files}
+    lint:
+      glob: "*.{js,jsx,ts,tsx}"
+      run: npm run lint:fix && git add {staged_files}
     format:
       glob: "*.{js,jsx,ts,tsx,json,md,html,css,yml,yaml}"
       run: npm run format && git add {staged_files}
-    # type-check:
-    #   run: npm run typecheck
+    type-check:
+      run: npm run typecheck
     find-deadcode:
       run: npm run find-deadcode
       stage_fixed: true
-    # prettier:
-    #   glob: "*.{js,jsx,ts,tsx,json,md,html,css,yml,yaml}"
-    #   run: npm run format && git add {staged_files}
+    prettier:
+      glob: "*.{js,jsx,ts,tsx,json,md,html,css,yml,yaml}"
+      run: npm run format && git add {staged_files}
+
+commit-msg:
+  commands:
+    lint-commit:
+      run: npx --no -- commitlint --edit
+
+pre-push:
+  parallel: true
+  commands:
+    npm-audit:
+      run: npm audit --omit dev --audit-level=moderate
+    format:
+      run: npx --no -- prettier --check .

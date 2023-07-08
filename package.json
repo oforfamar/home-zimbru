@@ -6,7 +6,8 @@
   "scripts": {
     "find-deadcode": "lerna run find-deadcode",
     "format": "prettier --write .",
-    "lint:fix": "lerna run lint && eslint --fix ."
+    "lint:fix": "lerna run lint && eslint --fix .",
+    "typecheck": "lerna run typecheck"
   },
   "keywords": [],
   "author": "",
