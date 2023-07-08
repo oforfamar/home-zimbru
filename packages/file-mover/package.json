@@ -5,10 +5,12 @@
   "main": "dist/src/index.js",
   "type": "module",
   "scripts": {
+    "pre-commit": "npm run typecheck && npm run find-deadcode && lint-staged",
     "build": "npm run clean && tsc",
     "clean": "rimraf dist/",
     "dev": "NODE_ENV=development npm run build && node --trace-warnings dist/src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier --write .",
+    "lint": "tsc --noEmit"
   },
   "author": "Tudor Roman",
   "license": "ISC",
@@ -16,6 +18,7 @@
     "dotenv": "^16.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.4.1"
+    "@types/node": "^20.4.1",
+    "prettier": "^3.0.0"
   }
 }

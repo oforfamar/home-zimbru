@@ -4,13 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "find-deadcode": "lerna run find-deadcode",
+    "format": "prettier --write .",
+    "lint:fix": "lerna run lint && eslint --fix ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "workspaces": [
-    "packages/push-notifications",
     "packages/file-mover"
-  ]
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.6",
+    "@commitlint/config-conventional": "^17.6.6",
+    "@types/eslint": "^8.44.0",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "lerna": "^6.6.2"
+  }
 }
