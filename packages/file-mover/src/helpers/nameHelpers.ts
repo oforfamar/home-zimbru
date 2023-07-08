@@ -5,7 +5,6 @@ import {
   removeProviderPrefixTransformer,
   removeResolutionSuffixTransformer,
   convertToObjectTransformer,
-  overwriteWithInfoFromDbTransformer,
 } from "./transformers/index.js";
 
 const pipelinePromise = promisify(pipeline);
@@ -25,23 +24,19 @@ export async function getTransformedName(file: string): Promise<string> {
     transform: convertToObjectTransformer,
   });
 
-  const overwriteWithInfoFromDb = new Transform({
-    transform: overwriteWithInfoFromDbTransformer,
-  });
-
   const saveFullnameToVariable = new Writable({
-    write(chunk, _, callback): void {
+    write(chunk: Buffer, _, callback): void {
       const {
         basePath,
         showName,
         season,
         file: { name, episode, extension, season: fileSeason },
-      }: File = JSON.parse(chunk.toString());
+      } = JSON.parse(chunk.toString()) as File;
       finalName = [
         basePath,
         showName,
         season,
-        `${name} - s${fileSeason}e${episode}.${extension}`,
+        `${name} - s${fileSeason as string}e${episode}.${extension}`,
       ].join("/");
       callback();
     },
@@ -52,7 +47,6 @@ export async function getTransformedName(file: string): Promise<string> {
     removeProviderPrefix,
     removeResolutionSuffix,
     convertToObject,
-    overwriteWithInfoFromDb,
     saveFullnameToVariable,
   );
 

@@ -1,7 +1,6 @@
 export interface Config {
-  mongoDbUrl: string;
   sourceFolder: string;
-  defaultPath: string;
+  destinationBasePath: string;
   provider: string;
   resolution: string;
   extension: string;

@@ -6,7 +6,7 @@ export async function getFilesInFolder(folderPath: string): Promise<string[]> {
     const files = await fs.readdir(folderPath);
     return files;
   } catch (error) {
-    console.error(`Error reading files from directory: ${error}`);
+    console.error("Error reading files from directory: ", error);
     return [];
   }
 }

@@ -3,6 +3,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
+    project: ["./tsconfig.json"],
   },
   plugins: ["@typescript-eslint", "import"],
   extends: [
@@ -19,9 +20,9 @@ module.exports = {
   },
   root: true,
   rules: {
-    "@typescript-eslint/explicit-function-return-type": true,
+    "@typescript-eslint/explicit-function-return-type": "warn",
     "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/no-non-null-assertion": true,
+    "@typescript-eslint/no-non-null-assertion": "warn",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/method-signature-style": "error",
     "@typescript-eslint/consistent-type-definitions": "error",
@@ -36,7 +37,7 @@ module.exports = {
 
     "no-unused-vars": "off",
     "no-return-await": "error",
-    "no-console": "warn",
+    "no-console": "off",
     eqeqeq: "error",
 
     "import/order": [

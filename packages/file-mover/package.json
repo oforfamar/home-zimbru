@@ -10,7 +10,8 @@
     "clean": "rimraf dist/",
     "dev": "NODE_ENV=development npm run build && node --trace-warnings dist/src/index.js",
     "format": "prettier --write .",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --skipLibCheck"
   },
   "author": "Tudor Roman",
   "license": "ISC",

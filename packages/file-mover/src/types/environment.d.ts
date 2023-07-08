@@ -1,9 +1,8 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      mongoDbUrl: string;
       sourceFolder: string;
-      defaultPath: string;
+      destinationBasePath: string;
       provider: string;
       resolution: string;
       extension: string;

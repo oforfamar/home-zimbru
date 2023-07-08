@@ -24,7 +24,7 @@ function convertToObject(
   const [showName, episode] = fixPossibleSplitErrors(parts);
 
   const fileObj: File = {
-    basePath: config.defaultPath,
+    basePath: config.destinationBasePath,
     showName,
     season: "Season 01",
     file: {
