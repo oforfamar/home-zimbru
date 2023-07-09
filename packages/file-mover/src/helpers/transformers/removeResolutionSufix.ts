@@ -1,11 +1,11 @@
 import type { TransformCallback } from "node:stream";
 import config from "../../config/index.js";
 
-function removeResolutionSuffix(
-  chunk: string | Buffer,
+export const removeResolutionSuffix = (
+  chunk: Buffer,
   _: BufferEncoding,
   callback: TransformCallback,
-): void {
+): void => {
   const file = chunk.toString();
   const indexOfResolution = file.indexOf(config.resolution);
 
@@ -14,8 +14,5 @@ function removeResolutionSuffix(
   }
 
   const newFile = file.slice(0, indexOfResolution - 1).trim();
-
   callback(null, newFile);
-}
-
-export default removeResolutionSuffix;
+};

@@ -1,41 +1,61 @@
 import type { TransformCallback } from "node:stream";
 import config from "../../config/index.js";
-import type { File } from "../../types/file.js";
+import { getShowsData } from "../getShowsData.js";
+import {
+  getCorrectFileName,
+  getCorrectSeason,
+  getCorrectSeasonFolder,
+  getCorrectShowName,
+} from "../showCorrectors/index.js";
 
-function fixPossibleSplitErrors(parts: string[]): string[] {
+const extractShowNameAndEpisode = (input: string): [string, string] => {
+  const parts = input.split(config.delimiter);
+
   if (parts.length === 2) {
-    return parts;
+    return [parts[0], parts[1]];
   }
 
+  // it's possible the show contains the delimiter in the name
+  // for this reason we remove the episode and join the rest in a single string
   const episode = parts.pop() as string;
   const showName = parts.join(config.delimiter);
 
   return [showName, episode];
-}
+};
 
-function convertToObject(
-  chunk: string | Buffer,
+export const convertToObject = async (
+  chunk: Buffer,
   _: BufferEncoding,
   callback: TransformCallback,
-): void {
-  const input = chunk.toString();
-  const parts = input.split(config.delimiter);
+): Promise<void> => {
+  try {
+    const showsData = await getShowsData();
 
-  const [showName, episode] = fixPossibleSplitErrors(parts);
+    const [showName, episode] = extractShowNameAndEpisode(chunk.toString());
 
-  const fileObj: File = {
-    basePath: config.destinationBasePath,
-    showName,
-    season: "Season 01",
-    file: {
-      name: parts[0],
-      season: "01",
+    // ignore files that are not found in shows file
+    if (showName in showsData.shows === false) {
+      return callback(null, "NOT_PROCESSED");
+    }
+
+    const correctShowName = await getCorrectShowName(showName);
+    const correctSeasonNumber = await getCorrectSeason(showName);
+    const correctSeasonFolder = await getCorrectSeasonFolder(
+      showName,
+      correctSeasonNumber,
       episode,
-      extension: config.extension,
-    },
-  };
+    );
+    const correctFileName = await getCorrectFileName(
+      showName,
+      correctShowName,
+      correctSeasonNumber,
+      episode,
+    );
 
-  callback(null, JSON.stringify(fileObj));
-}
+    const fileArr = [correctShowName, correctSeasonFolder, correctFileName];
 
-export default convertToObject;
+    callback(null, fileArr.join("/"));
+  } catch (error) {
+    callback(error as Error);
+  }
+};

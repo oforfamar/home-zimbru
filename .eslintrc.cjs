@@ -35,9 +35,9 @@ module.exports = {
       { assertionStyle: "as", objectLiteralTypeAssertions: "never" },
     ],
 
-    "no-unused-vars": "off",
+    "no-unused-vars": "error",
     "no-return-await": "error",
-    "no-console": "off",
+    "no-console": "warn",
     eqeqeq: "error",
 
     "import/order": [
