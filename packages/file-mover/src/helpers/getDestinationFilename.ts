@@ -1,6 +1,5 @@
 import { pipeline, Readable, Transform, Writable } from "node:stream";
 import { promisify } from "node:util";
-import type { File } from "../types/file.js";
 import {
   removeProviderPrefixTransformer,
   removeResolutionSuffixTransformer,
@@ -9,8 +8,12 @@ import {
 
 const pipelinePromise = promisify(pipeline);
 
-export async function getTransformedName(file: string): Promise<string> {
-  let finalName = "";
+export const getDestinationFilename = async (
+  inputFileName: string,
+): Promise<string> => {
+  let destinationFileName = "";
+
+  const fileReadable = Readable.from(inputFileName);
 
   const removeProviderPrefix = new Transform({
     transform: removeProviderPrefixTransformer,
@@ -21,34 +24,32 @@ export async function getTransformedName(file: string): Promise<string> {
   });
 
   const convertToObject = new Transform({
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     transform: convertToObjectTransformer,
   });
 
   const saveFullnameToVariable = new Writable({
     write(chunk: Buffer, _, callback): void {
-      const {
-        basePath,
-        showName,
-        season,
-        file: { name, episode, extension, season: fileSeason },
-      } = JSON.parse(chunk.toString()) as File;
-      finalName = [
-        basePath,
-        showName,
-        season,
-        `${name} - s${fileSeason as string}e${episode}.${extension}`,
-      ].join("/");
+      const input = chunk.toString();
+
+      if (input === "NOT_PROCESSED") {
+        destinationFileName = input;
+        return callback();
+      }
+
+      destinationFileName = input;
+
       callback();
     },
   });
 
   await pipelinePromise(
-    Readable.from(file),
+    fileReadable,
     removeProviderPrefix,
     removeResolutionSuffix,
     convertToObject,
     saveFullnameToVariable,
   );
 
-  return finalName;
-}
+  return destinationFileName;
+};

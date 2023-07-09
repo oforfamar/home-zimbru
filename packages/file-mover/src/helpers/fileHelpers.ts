@@ -1,27 +1,32 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import config from "../config/index.js";
+import { logger } from "./logger.js";
 
-export async function getFilesInFolder(folderPath: string): Promise<string[]> {
+export const getFilesInFolder = async (
+  folderPath: string,
+): Promise<string[]> => {
   try {
     const files = await fs.readdir(folderPath);
     return files;
   } catch (error) {
-    console.error("Error reading files from directory: ", error);
+    logger.error("Error reading files from directory: ", error);
     return [];
   }
-}
+};
 
-async function createFolders(dest: string): Promise<void> {
+const createFolders = async (dest: string): Promise<void> => {
   const dir = path.dirname(dest);
 
   try {
+    // will throw error if folder doesn't exist
     await fs.stat(dir);
   } catch (error) {
     await fs.mkdir(dir, { recursive: true });
   }
-}
+};
 
-export async function moveFile(src: string, dest: string): Promise<void> {
+export const moveFile = async (src: string, dest: string): Promise<void> => {
   try {
     const stat = await fs.stat(src);
 
@@ -34,8 +39,9 @@ export async function moveFile(src: string, dest: string): Promise<void> {
     await fs.copyFile(src, dest);
     await fs.unlink(src);
 
-    await fs.chown(dest, 999, 999);
+    // change user and group
+    await fs.chown(dest, config.uid, config.uid);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
-}
+};

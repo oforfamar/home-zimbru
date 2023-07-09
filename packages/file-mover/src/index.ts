@@ -1,25 +1,31 @@
 import "./env.js";
 import config from "./config/index.js";
 import { getFilesInFolder } from "./helpers/fileHelpers.js";
-import { getTransformedName } from "./helpers/nameHelpers.js";
+import { getDestinationFilename } from "./helpers/getDestinationFilename.js";
+import { logger } from "./helpers/logger.js";
 
-async function main(): Promise<void> {
+const main = async (): Promise<void> => {
   try {
-    console.log(config);
     const files = await getFilesInFolder(config.sourceFolder);
-    console.log(files);
 
     for (const file of files) {
       const sourceFile = `${config.sourceFolder}/${file}`;
-      const destinationFile = await getTransformedName(file);
+      const destinationFileName = await getDestinationFilename(file);
+
+      if (destinationFileName === "NOT_PROCESSED") {
+        logger.warn(`${file} was not found in shows data, skipping!`);
+        continue;
+      }
+
+      const destinationFile = `${config.destinationBasePath}/${destinationFileName}`;
 
       // await moveFile(sourceFile, destinationFile);
 
-      console.log(`${sourceFile} ->  ${destinationFile}`);
+      logger.info(`${sourceFile} -> ${destinationFile}`);
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
   }
-}
+};
 
 await main();
