@@ -10,7 +10,8 @@ export const getFilesInFolder = async (
     const files = await fs.readdir(folderPath);
     return files;
   } catch (error) {
-    logger.error("Error reading files from directory: ", error);
+    logger.error(`Error reading files from directory: "${folderPath}"`);
+    logger.error(error);
     return [];
   }
 };
@@ -42,6 +43,7 @@ export const moveFile = async (src: string, dest: string): Promise<void> => {
     // change user and group
     await fs.chown(dest, config.uid, config.uid);
   } catch (error) {
+    logger.error(`Error moving file ${src} to ${dest}`);
     logger.error(error);
   }
 };
