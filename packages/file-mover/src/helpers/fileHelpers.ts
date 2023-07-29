@@ -41,7 +41,7 @@ export const moveFile = async (src: string, dest: string): Promise<void> => {
     await fs.unlink(src);
 
     // change user and group
-    await fs.chown(dest, config.uid, config.uid);
+    await fs.chown(dest, config.uid, config.gid);
   } catch (error) {
     logger.error(`Error moving file ${src} to ${dest}`);
     logger.error(error);

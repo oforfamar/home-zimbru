@@ -2,18 +2,18 @@
   "name": "file-mover",
   "version": "1.0.0",
   "description": "small project that will move files from one folder to another",
-  "main": "dist/src/index.js",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "pre-commit": "npm run typecheck && npm run find-deadcode && lint-staged",
-    "build": "npm run clean && tsc && npm run copy-files",
+    "pack": "npm run clean && npm run copy-files",
     "clean": "rimraf dist/",
-    "copy-files": "copyfiles ./.env ./*.yaml dist/",
-    "dev": "NODE_ENV=development npm run build && node --trace-warnings dist/src/index.js",
+    "copy-files": "mkdir dist && cp -r ./src .env package.json *.yaml tsconfig.json ./dist/",
+    "dev": "NODE_ENV=development ts-node src/index.ts",
     "format": "prettier --write .",
     "lint": "tsc --noEmit",
-    "start": "NODE_ENV=production node dist/src/index.js",
-    "typecheck": "tsc --skipLibCheck"
+    "start": "NODE_ENV=production ts-node src/index.ts",
+    "typecheck": "tsc --noEmit --skipLibCheck"
   },
   "author": "Tudor Roman",
   "license": "ISC",
@@ -21,7 +21,8 @@
     "dotenv": "^16.3.1",
     "js-yaml": "^4.1.0",
     "pino": "^8.14.1",
-    "pino-pretty": "^10.0.1"
+    "pino-pretty": "^10.0.1",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.5",
