@@ -6,11 +6,13 @@
   "type": "module",
   "scripts": {
     "pre-commit": "npm run typecheck && npm run find-deadcode && lint-staged",
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && tsc && npm run copy-files",
     "clean": "rimraf dist/",
+    "copy-files": "copyfiles ./.env ./*.yaml dist/",
     "dev": "NODE_ENV=development npm run build && node --trace-warnings dist/src/index.js",
     "format": "prettier --write .",
     "lint": "tsc --noEmit",
+    "start": "NODE_ENV=production node dist/src/index.js",
     "typecheck": "tsc --skipLibCheck"
   },
   "author": "Tudor Roman",
@@ -24,6 +26,7 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^20.4.1",
+    "copyfiles": "^2.4.1",
     "prettier": "^3.0.0"
   }
 }

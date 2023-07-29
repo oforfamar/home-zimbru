@@ -130,3 +130,7 @@ dist
 .pnp.*
 
 shows.yaml
+
+*.sh
+Makefile
+*.zip

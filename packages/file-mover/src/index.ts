@@ -24,6 +24,7 @@ const main = async (): Promise<void> => {
       logger.info(`${sourceFile} -> ${destinationFile}`);
     }
   } catch (error) {
+    logger.error("An error occurred when trying to move the files.");
     logger.error(error);
   }
 };
