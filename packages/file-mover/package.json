@@ -11,6 +11,7 @@
     "copy-files": "mkdir dist && cp -r ./src .env package.json *.yaml tsconfig.json ./dist/",
     "dev": "NODE_ENV=development ts-node src/index.ts",
     "format": "prettier --write .",
+    "find-deadcode": "ts-prune -i src/index.ts",
     "lint": "tsc --noEmit",
     "start": "NODE_ENV=production ts-node src/index.ts",
     "typecheck": "tsc --noEmit --skipLibCheck"
@@ -28,6 +29,7 @@
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^20.4.1",
     "copyfiles": "^2.4.1",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "ts-prune": "^0.10.3"
   }
 }
