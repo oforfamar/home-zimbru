@@ -13,7 +13,8 @@
   "author": "",
   "license": "ISC",
   "workspaces": [
-    "packages/file-mover"
+    "packages/file-mover",
+    "packages/notifications"
   ],
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
