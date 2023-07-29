@@ -10,6 +10,7 @@ const config: Config = {
   extension: process.env.extension ?? "",
   delimiter: process.env.delimiter ?? "",
   uid: Number(process.env.uid),
+  gid: Number(process.env.gid),
 };
 
 export default config;

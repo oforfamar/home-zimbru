@@ -8,4 +8,5 @@ export interface Config {
   extension: string;
   delimiter: string;
   uid: number;
+  gid: number;
 }

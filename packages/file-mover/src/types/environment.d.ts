@@ -10,6 +10,7 @@ declare global {
       extension: string;
       delimiter: string;
       uid: string;
+      gid: string;
     }
   }
 }

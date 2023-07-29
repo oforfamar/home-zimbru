@@ -1,6 +1,6 @@
 import "./env.js";
 import config from "./config/index.js";
-import { getFilesInFolder } from "./helpers/fileHelpers.js";
+import { getFilesInFolder, moveFile } from "./helpers/fileHelpers.js";
 import { getDestinationFilename } from "./helpers/getDestinationFilename.js";
 import { logger } from "./helpers/logger.js";
 
@@ -19,7 +19,7 @@ const main = async (): Promise<void> => {
 
       const destinationFile = `${config.destinationBasePath}/${destinationFileName}`;
 
-      // await moveFile(sourceFile, destinationFile);
+      await moveFile(sourceFile, destinationFile);
 
       logger.info(`${sourceFile} -> ${destinationFile}`);
     }
