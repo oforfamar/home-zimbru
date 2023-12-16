@@ -1,4 +1,4 @@
-export interface Show {
+interface Show {
   correctName?: string;
   season?: number;
   isLongRunning?: boolean;
