@@ -11,7 +11,7 @@ pre-commit:
     format:
       glob: "*.{js,jsx,ts,tsx,json,md,html,css,yml,yaml}"
       run: npm run format && git add {staged_files}
-    type-check:
+    typecheck:
       run: npm run typecheck
     find-deadcode:
       run: npm run find-deadcode

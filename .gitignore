@@ -134,3 +134,6 @@ shows.yaml
 *.sh
 Makefile
 *.zip
+
+
+.nx/cache

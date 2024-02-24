@@ -2,19 +2,18 @@
   "name": "home-zimbru",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "find-deadcode": "lerna run find-deadcode",
-    "format": "prettier --write .",
-    "lint:fix": "lerna run lint && eslint --fix .",
-    "typecheck": "lerna run typecheck"
+    "lint": "nx run-many -t lint",
+    "format": "nx run-many -t format",
+    "typecheck": "nx run-many -t typecheck",
+    "find-deadcode": "nx run-many -t find-deadcode",
+    "prettier": "nx run-many -t prettier"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "workspaces": [
-    "packages/file-mover",
-    "packages/notifications"
+    "packages/file-mover"
   ],
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
@@ -26,6 +25,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
-    "lerna": "^7.1.4"
+    "nx": "18.0.5",
+    "@nx/eslint": "18.0.5"
   }
 }
