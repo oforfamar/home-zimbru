@@ -5,6 +5,14 @@ import { getDestinationFilename } from "./helpers/getDestinationFilename.js";
 import { logger } from "./helpers/logger.js";
 
 const main = async (): Promise<void> => {
+  const currentDate = new Date();
+  const formattedDate = [
+    currentDate.getDate(),
+    currentDate.getMonth() + 1,
+    currentDate.getFullYear(),
+  ].join("-");
+  logger.info(`${formattedDate} Starting the process on...`);
+
   try {
     const files = await getFilesInFolder(config.sourceFolder);
 
