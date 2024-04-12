@@ -12,7 +12,8 @@
     "dev": "NODE_ENV=development ts-node src/index.ts",
     "format": "prettier --write .",
     "find-deadcode": "ts-prune -i src/index.ts",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && eslint --cache .",
+    "lint:fix": "tsc --noEmit && eslint --cache --fix .",
     "start": "NODE_ENV=production ts-node src/index.ts",
     "typecheck": "tsc --noEmit --skipLibCheck"
   },
